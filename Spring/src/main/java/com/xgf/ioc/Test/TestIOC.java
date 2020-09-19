@@ -13,7 +13,7 @@ import java.util.*;
 * */
 public class TestIOC {
     public static void main(String[] args) {
-        //注解进行配置,实例化ApplicationContext容器
+        //注解进行配置,实例化ApplicationContext容器  通过ClassPathXmlApplicationContext方式实例化ApplicationContext
         ApplicationContext context = new ClassPathXmlApplicationContext("com/xgf/ioc/applicationContext.xml");
 
         //通过getBean方法从ApplicationContext容器当中获取User对象
