@@ -57,6 +57,13 @@
     </dependency>
 
 
+<!--AspectJ 实现Spring AOP  方式：  1、aspectJ基于XML开发  切面编程AOP  事物回滚使用-->
+    <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.9.5</version>
+    </dependency>
 
 
 
