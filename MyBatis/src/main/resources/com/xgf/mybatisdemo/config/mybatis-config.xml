@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--  dtd是对xml配置标签与属性的约束  -->
+<configuration>
+    <!-- environment环境，开发环境，生产环境  用来配置数据库连接-->
+    <!--  development默认值，开发环境  -->
+    <environments default="development">
+        <environment id="development">
+            <!--transactionManager 使用jdbc的事务管理 让sql语句作为一个组，要么全部成功，要么全部失败-->
+            <transactionManager type="JDBC"/>
+            <!-- POOLED  这是mybatis自带的连接池-->
+            <dataSource type="POOLED">
+                <!-- 数据库连接的四大基本信息 -->
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatisdb?useUnicode=true&amp;characterEncoding=utf-8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="861221293"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+    <!-- mappers 用来配置多个映射文件(写sql语句的文件)，指定配置文件 -->
+    <mappers>
+        <mapper resource="com/xgf/mybatisdemo/dao/UserMapper.xml"/>
+    </mappers>
+</configuration>
