@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+
+    <!--1 引入jdbc属性文件，在配置中通过占位使用 -->
+    <context:property-placeholder location="classpath*:db.properties" />
+
+    
+
+    <!--  由spring管理    配置数据源数据库连接 -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="driverClassName" value="${jdbc.driver}"/>
+    </bean>
+
+    <!--  事务管理器 完成手动事务管理-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--配置mybatis-->
+    <!--
+        创建sqlsessionFactory 管理连接池
+        sqlSessionFactory sqlSesion工厂  每个sqlSession  对应一个  Connection
+        所有的数据库的增删查改通过sqlSession来完成
+        通过connection.preparedStatment() ; 获取结果集ResultSet
+        insesrt users User username  insert into users values(?,?,?);
+        UserDAO save  JdbcTemplete.update
+    -->
+    <!--通过完全限定名匹配查找  创建SqlSessionFactoryBean-->
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+
+        <!-- 如果完全限定名com.xgf.mybatis_spring.dao与实际名不相同，通过以下配置可以解决找不到问题 -->
+        <!-- 如果dao包下面还有目录 value="com/xgf/mybatis_spring/dao/**/*.xml"  -->
+
+        <!--配置要加载的xml，可以指定在某个路径下-->
+        <property name="mapperLocations" value="com/xgf/mybatis_spring/dao/*.xml"/>
+        <!-- 配置mybtais中的所有属性 -->
+        <property name="configuration">
+            <bean class="org.apache.ibatis.session.Configuration">
+                <property name="mapUnderscoreToCamelCase" value="true"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <mybatis:scan base-package="com.xgf.mybatis_spring.dao"/>
+
+    <!-- 配置事务 提供回滚，发生异常数据回滚  需要在类/方法上写注解 @Transactional -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>

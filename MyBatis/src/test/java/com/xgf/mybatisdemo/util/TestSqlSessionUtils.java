@@ -12,7 +12,7 @@ import java.sql.Date;
 import java.util.List;
 
 
-//测试工具类SqlSessionUtil能否获取SqlSession
+//测试工具类SqlSessionUtil能否获取SqlSession  并进行增删拆改
 public class TestSqlSessionUtils {
 
     private SqlSession sqlSession = null;
@@ -20,7 +20,7 @@ public class TestSqlSessionUtils {
     //@Before 在每个方法执行前获取session
     @Before
     public void init(){
-        //获取sqlSession
+        //通过SqlSessionUtils工具类获取sqlSession
         sqlSession = SqlSessionUtils.getSession();
         userMapper = sqlSession.getMapper(UserMapper.class);
     }

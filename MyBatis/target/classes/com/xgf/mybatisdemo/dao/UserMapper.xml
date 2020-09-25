@@ -12,8 +12,12 @@
    resultType="com.qst.mybatis.bean.User" 返回的类型
  -->
 
+<!--使用代理以后 当前的映射文件要与接口同名，并且放在同一个位置
+    使用代理以后 namespace要求写接口的全类名 包名+类名=全类名
+-->
+
 <mapper namespace="com.xgf.mybatisdemo.dao.UserMapper">
-<!--parameterType 输入(接收)的参数类型   resultType  返回的类型
+    <!--parameterType 输入(接收)的参数类型   resultType  返回的类型
      #{id}是占位符 select * from users where id = ?; 就相当于调用对象的get方法-->
     <select id="getUserById" parameterType="int" resultType="com.xgf.mybatisdemo.bean.User">
         select * from user where id = #{id}
@@ -38,14 +42,8 @@
     </update>
 
 
-   <!-- <update id="updateUser" parameterType="com.xgf.mybatisdemo.bean.User" >
-        update user set username=#{username} where id=#{id}
-    </update>-->
-
     <delete id="deleteById" parameterType="int">
           delete from user where id= #{id}
     </delete>
-
-
 
 </mapper>
