@@ -21,14 +21,14 @@
         <property name="driverClassName" value="${jdbc.driver}"/>
     </bean>
 
-    <!--配置mybatis-->
     <!--
+        配置mybatis
         创建sqlsessionFactory 管理连接池
         sqlSessionFactory sqlSesion工厂  每个sqlSession  对应一个  Connection
         所有的数据库的增删查改通过sqlSession来完成
         通过connection.preparedStatment() ; 获取结果集ResultSet
     -->
-    <!--通过完全限定名匹配查找  创建SqlSessionFactoryBean  -->
+    <!--4. 通过完全限定名匹配查找  创建SqlSessionFactoryBean  -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
 
@@ -46,14 +46,15 @@
         </property>-->
     </bean>
 
-    <!--  事务管理器 完成手动事务管理-->
+    <!-- 5. mybatis提供的一个注解扫描标签（搜索映射器 Mapper 接口），通过自动扫描注解的机制，创建每个dao接口定义的bean  -->
+    <mybatis:scan base-package="com.xgf.mybatis_spring.dao"/>
+
+    <!-- 6. 配置事务管理器 完成手动事务管理  由spring管理事务-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-
-    <!-- mybatis提供的一个注解扫描标签，通过自动扫描注解的机制，创建每个dao接口定义的bean  -->
-    <mybatis:scan base-package="com.xgf.mybatis_spring.dao"/>
-
-    <!-- 配置事务 提供回滚，发生异常数据回滚  需要在类/方法上写注解 @Transactional -->
+    <!--
+        支持注解驱动的事务管理，指定事务管理器。
+        配置事务 提供回滚，发生异常数据回滚  需要在类/方法上写注解 @Transactional -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>
