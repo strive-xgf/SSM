@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-//测试类 测试spring-mybatis整合 进行增删查改
+//测试类
 public class TestOneToMany {
 
     private static ApplicationContext applicationContext = null;

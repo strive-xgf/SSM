@@ -34,9 +34,10 @@
         懒加载 只有需要用到的时候才加载，不需要用到的时候就不加载，单表时可提高效率
      -->
     <!-- collection  cloumn为一对多的 多表的主键 foreignColum以一表的外键-->
-    <resultMap id="userTaskMap2" type="com.xgf.correlation.one_to_many.bean.User">
+    <resultMap id="userTaskMap2" type="com.xgf.correlation.one_to_many.bean.User" autoMapping="true">
          <id column="id" property="id"/>
         <result column="username" property="username"/>
+        <result column="password" property="password"/>
         <collection property="taskList"
                     ofType="com.xgf.correlation.one_to_many.bean.Task"
                     column="id"
@@ -46,7 +47,7 @@
     </resultMap>
 
     <select id="getUserTaskById2" parameterType="int" resultMap="userTaskMap2">
-        select id,username
+        select id,username,password
         from users
         where id = #{id}
     </select>
