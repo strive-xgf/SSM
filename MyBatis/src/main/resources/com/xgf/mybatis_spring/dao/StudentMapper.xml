@@ -16,7 +16,7 @@
 
     <!--   keyProperty  获取到的新插入的记录的主键赋值给返回对象的属性
             useGeneratedKeys="true",使用主键生成（主键自动增长）
-            keyProperty="id" 将主键的值id赋值给对象user  (创建对象的时候不用赋值主键值)
+            keyProperty="id" 将主键的值stuId赋值给对象user(javabean类的属性)  (创建对象的时候不用赋值主键值)
     -->
     <insert id="addStudent" parameterType="com.xgf.mybatis_spring.bean.Student" useGeneratedKeys="true" keyProperty="stuId">
         insert into student(stuId,stuName,stuClass,stuScore) values(#{stuId},#{stuName},#{stuClass},#{stuScore});

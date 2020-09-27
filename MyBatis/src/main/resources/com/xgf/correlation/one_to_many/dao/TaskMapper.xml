@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xgf.correlation.one_to_many.dao.TaskMapper">
+
+    <select id="getTaskListByUid" parameterType="int"
+            resultType="com.xgf.correlation.one_to_many.bean.Task">
+
+        select id,taskName,userId from task where userId=#{userId}
+    </select>
+
+</mapper>

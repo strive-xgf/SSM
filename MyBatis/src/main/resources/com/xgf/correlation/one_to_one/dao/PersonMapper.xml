@@ -52,6 +52,7 @@
                      select="com.xgf.correlation.one_to_one.dao.CardMapper.getCardById"
                      column="id"
                      foreignColumn="id_card"
+
         />
     </resultMap>
 

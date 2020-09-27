@@ -127,7 +127,7 @@
       <scope>compile</scope>
     </dependency>
 
-<!--  mybatis-generator的依赖 自动生成javabean和sql -->
+<!--  mybatis-generator的依赖 用于自动生成javabean和sql -->
     <dependency>
       <groupId>org.mybatis.generator</groupId>
       <artifactId>mybatis-generator-maven-plugin</artifactId>
