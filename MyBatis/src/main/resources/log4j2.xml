@@ -12,6 +12,9 @@
     <Loggers>
         <!--DEBUG 是日志级别 调试信息也会记录  name: 是要进行日志记录的目录 -->
         <Logger name="com.xgf.mybatisdemo.dao" level="DEBUG"/>
+        <Logger name="com.xgf.dynamic_sql.dao" level="DEBUG"/>
+
+
 
         <Root level="error">
             <AppenderRef ref="Console"/>

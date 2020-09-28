@@ -33,8 +33,4 @@ public class TestManyToMany {
         Order order = orderMapper.getOrderById(1);
         System.out.println(order);
     }
-
-
-
-
 }
