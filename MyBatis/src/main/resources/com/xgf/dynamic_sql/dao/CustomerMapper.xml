@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xgf.dynamic_sql.dao.CustomerMapper">
+
+    <!--正常查询 多条件存在查询-->
+    <select id="getCustomerByNameAndJob" parameterType="com.xgf.dynamic_sql.bean.Customer" resultType="com.xgf.dynamic_sql.bean.Customer">
+        select id,username,job
+        from customer
+        where username like concat('%',#{username},'%') and job = #{job}
+    </select>
+
+    <!-- if 查询，满足test条件就执行里面的代码，程序拼接and/or需要有一个where 1=1 的前提来拼接 -->
+    <select id="getCustomerByNameAndJobForIf" parameterType="com.xgf.dynamic_sql.bean.Customer" resultType="com.xgf.dynamic_sql.bean.Customer">
+        select id,username,job
+        from customer
+        where 1=1
+        <if test="username!=null and username!=''">
+            and username like concat('%',#{username},'%')
+        </if>
+        <if test="job!=null and job!=''">
+            and job=#{job}
+        </if>
+
+    </select>
+
+    <!-- choose 查询 满足一个条件，就忽略后面的条件，没有一个条件满足，就输出所有-->
+    <select id="getCustomerByNameAndJobForChoose" parameterType="com.xgf.dynamic_sql.bean.Customer" resultType="com.xgf.dynamic_sql.bean.Customer">
+        select id,username,job
+        from customer
+        where 1=1
+        <choose>
+            <when test="username!=null and username!=''">
+                and username like concat('%',#{username},'%')
+            </when>
+            <when test="job!=null and job!=''">
+                and job=#{job}
+            </when>
+            <otherwise>
+                order by username desc
+            </otherwise>
+        </choose>
+    </select>
+
+
+    <!--where标签，如果后面没有条件(条件都不满足)不加where，如果后面有条件，会自动增加一个where
+    会将多余的and、or去掉，会自动填充第一个缺失的and、or-->
+    <select id="getCustomerByNameAndJobForWhere"
+            parameterType="com.xgf.dynamic_sql.bean.Customer"
+            resultType="com.xgf.dynamic_sql.bean.Customer" useCache="true">
+        select id,username,job
+        from customer
+        <where>
+            <if test="username!=null and username!=''">
+                and username like concat('%',#{username},'%')
+            </if>
+            <if test="job!=null and job!=''">
+                and job=#{job}
+            </if>
+        </where>
+
+    </select>
+
+    <!--trim 可以添加前后缀(prefix和suffix) 覆盖前后缀(prefixOverrides和suffixOverrides)
+        这里覆盖了前缀and|or，添加了前缀where
+    -->
+    <select id="getCustomerByNameAndJobForTrim" parameterType="com.xgf.dynamic_sql.bean.Customer" resultType="com.xgf.dynamic_sql.bean.Customer">
+        select id,username,job
+        from customer
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="username!=null and username!=''">
+                or username like concat('%',#{username},'%')
+            </if>
+            <if test="job!=null and job!=''">
+                and job=#{job}
+            </if>
+        </trim>
+
+    </select>
+
+    <!--set在动态update语句中，可以使用<set>元素动态更新列 ->
+            set 元素可以用于动态包含需要更新的列，忽略其它不更新的列(如果其它列数据为null，就不更新)。
+        (返回结果是整数，更新删除增加不需要写resultType)
+    -->
+    <update id="updateForSet" parameterType="com.xgf.dynamic_sql.bean.Customer" flushCache="false">
+        update customer
+        <set>
+            <if test="username!=null and username!=''">
+                username=#{username},
+            </if>
+            <if test="job!=null and job!=''">
+                job=#{job},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--通过trim+set实现更新数据，通过添加和忽略前后缀实现  添加前缀set，忽略后缀的逗号,-->
+    <update id="updateForTrim" parameterType="com.xgf.dynamic_sql.bean.Customer">
+        update customer
+        <trim prefix="set" suffixOverrides=",">
+            <if test="username!=null and username!=''">
+                username=#{username},
+            </if>
+            <if test="job!=null and job!=''">
+                job=#{job},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+
+    <!--foreach标签
+        collection：传入的集合   item：循环出来的数据起别名   open：以什么开始
+        colose：以什么结束  separator： 分隔符 index： 循环计数器
+        通过where标签和if标签 判断如果传入的列表为空，则后面的sql语句不添加，就查询所有customer
+    -->
+    <select id="getCustomerByIdsForeach" parameterType="list" resultType="com.xgf.dynamic_sql.bean.Customer">
+        select id,username,job
+        from customer
+        <where>
+            <if test="list!=null and list.size()>0">
+                id in
+                <foreach collection="list" item="id" open="(" close=")" separator="," index="index" >
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+
+    </select>
+
+
+    <!--  bind标签 解决可移植性问题  解决不同数据库拼接函数或连接符号的不同
+            concat()数据库连接，将字符串拼接成一个字符串，是MySQL数据库独有的，在别的数据库中不能识别
+            bind标签，name取名给其它地方调用，可以随便取， _parameter.getXXX()调用get方法
+    -->
+    <select id="getCustomerByNameAndJobForBind" parameterType="com.xgf.dynamic_sql.bean.Customer" resultType="com.xgf.dynamic_sql.bean.Customer">
+        <if test="username!=null and username!=''">
+            <bind name="pattern" value="'%' + _parameter.getUsername() + '%'" />
+        </if>
+        select id,username,job
+        from customer
+        <where>
+            <if test="username!=null and username!=''">
+                and username like #{pattern}
+            </if>
+            <if test="job!=null and job!=''">
+                and job=#{job}
+            </if>
+        </where>
+
+    </select>
+
+
+    <!--foreach和insert共同使用  实现foreach循环批量插入
+        item是每次从集合中取出一个对象的别名-->
+    <insert id="insertCustomerList" parameterType="list">
+        insert into customer(username,job) values
+        <foreach collection="list" separator="," item="customer">
+             (#{customer.username},#{customer.job})
+         </foreach>
+    </insert>
+
+</mapper>

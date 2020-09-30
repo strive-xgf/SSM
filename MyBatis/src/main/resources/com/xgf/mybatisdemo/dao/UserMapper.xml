@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+     书写操作User表的Sql语句，每一个SqL语句都有Id，id必须是唯一
+      使用命名空间保证不重复 sql的id =  命名空间+id
+  命名空间
+   一般和业务类接口名字相同，业务类叫 UserMapper
+   parameterType="int" 接受的参数类型
+   resultType="com.qst.mybatis.bean.User" 返回的类型
+ -->
+
+<!--使用代理以后 当前的映射文件要与接口同名，并且放在同一个位置
+    使用代理以后 namespace要求写接口的全类名 包名+类名=全类名
+-->
+
+<mapper namespace="com.xgf.mybatisdemo.dao.UserMapper">
+    <!--parameterType 输入(接收)的参数类型   resultType  返回的类型
+     #{id}是占位符 select * from users where id = ?; 就相当于调用对象的get方法-->
+    <select id="getUserById" parameterType="int" resultType="com.xgf.mybatisdemo.bean.User">
+        select * from user where id = #{id}
+    </select>
+
+    <!--    keyProperty  获取到的新插入的记录的主键赋值给返回对象的属性
+            useGeneratedKeys="true",使用主键生成（主键自动增长）
+            keyProperty="id" 将主键的值id赋值给对象user  (创建对象的时候不用赋值主键值)
+    -->
+    <insert id="saveUser" parameterType="com.xgf.mybatisdemo.bean.User" useGeneratedKeys="true" keyProperty="id">
+        insert into user(username,birthday,sex,address) values(#{username},#{birthday},#{sex},#{address});
+    </insert>
+
+    <!-- 输出多个用户对象 ， mybatis  会自动判断  如果是多个User对象，自动封装成集合   -->
+    <select id="findByUsername" resultType="com.xgf.mybatisdemo.bean.User">
+        select * from user where username like #{username};
+    </select>
+
+
+    <update id="updateUser" parameterType="com.xgf.mybatisdemo.bean.User">
+        update user set username=#{username},birthday=#{birthday},sex=#{sex},address=#{address} where id = #{id};
+    </update>
+
+
+    <delete id="deleteById" parameterType="int">
+          delete from user where id= #{id}
+    </delete>
+
+</mapper>
