@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.InputStream;
 
-//通过ThreadLocal改造获取SqlSession的工具类SqlSessionUtils(Spring已经封装，可以不使用)  *
+//通过ThreadLocal改造获取SqlSession的工具类SqlSessionUtils(Spring已经封装，可以不使用) - 测试修改
 //sqlSession工具类，获取sqlSession  改造SqlSessionUtils，实现dao层与service层解耦 -- 使用的时候只会，删除dao层对service层无影响(删除对另一个无影响)
 public class SqlSessionUtils2 {
     private static SqlSessionFactory sqlSessionFactory;
