@@ -1,27 +1,21 @@
-# 所有空行或者以 ＃ 开头的行都会被 Git 忽略，#开头的文件标识注释，可以使用反斜杠进行转义
-#*.txt
-#.idea/
-#idea/
-#*.iml
-#*.class
-#.kotlin_module
-#MyBatis/target/classes/
-#*/target/classes/
-#MyBatis/MyBatis.iml
-
-# Created by .ignore support plugin (hsz.mobi)
-### Java template
-# Compiled class file
+# basic  
 *.class
-
-# Log file
 *.log
+target/
+.classpath
+.project
+.settings
 
-# BlueJ files
-*.ctxt
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# idea
+*.iml
+.idea/
+*.ipr
+*.iws
+
+# Generated files
+bin/
+gen/
 
 # Package Files #
 *.jar
@@ -32,29 +26,22 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# BlueJ files
+*.ctxt
 
-# 新增
-.classpath
-.project
-.settings
-target
-
-# idea
-*.iml
-.idea
-.idea/
-
-target/
-target/*
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
 
 
 
-# MyBatis
 
-MyBatis/target/
-MyBatis/*.iml
+
+
+
+
+
+
+
 
 
 
