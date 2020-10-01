@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xgf.mysql_cache.dao.CustomerMapper">
+
+    <!--在映射文件中开启二级缓存，flushInterval：每隔多长时间进行缓存的清除
+        eviction：二级缓存size存满的时候，按照什么规则来清除对象
+        size：二级缓存中可以存储多少对象
+        readOnly：设置为false，会兑换成中对象进行克隆clone操作，速度慢，但是安全，类需要实现Serializable
+        blocking：设置为false，为非阻塞式缓存
+     -->
+    <cache flushInterval="10000" eviction="LRU" blocking="false" readOnly="false" size="1024"/>
+
+    <!--where标签，如果后面没有条件(条件都不满足)不加where，如果后面有条件，会自动增加一个where
+    会将多余的and、or去掉，会自动填充第一个缺失的and、or-->
+    <!-- 可以在sql语句中单独设置是否启用二级缓存 通过useCache="true"设置启用二级缓存 -->
+    <select id="getCustomerByNameAndJobForWhere"
+            parameterType="com.xgf.mysql_cache.bean.Customer"
+            resultType="com.xgf.mysql_cache.bean.Customer"
+            useCache="true">
+        select id,username,job
+        from customer
+        <where>
+            <if test="username!=null and username!=''">
+                and username like concat('%',#{username},'%')
+            </if>
+            <if test="job!=null and job!=''">
+                and job=#{job}
+            </if>
+        </where>
+
+    </select>
+
+</mapper>

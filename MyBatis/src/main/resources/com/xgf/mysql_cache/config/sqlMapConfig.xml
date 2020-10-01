@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!-- 使用mybatis方式全局变量设置在核心配置文件sqlMapConfig.xml的settings中
+         spring和mybatis整合的情况下，mybatis下的全局参数<settings>在spring的配置文件中设置，
+            在spring的sqlSessionFactory对象中，将配置粘入bean的property中
+
+        settings用于配置全局变量，有顺序要求，要放在environment前面，配置全局参数
+        lazyLoadingEnabled 配置懒加载，全局允许或静止懒加载，所有的任务都懒加载
+        具体实现懒加载：通过在resultMap中设置fetchType实现懒加载
+
+        <setting name="cacheEnabled" value="true"/> cacheEnabled允许二级缓存
+    -->
+    <settings>
+        <!-- 打开延迟加载 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 将积极加载改为消极加载即按需要加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!-- 开启二级缓存(默认也是开启的)-->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;allowMultiQueries=true"/>
+                <property name="username" value="root"/>
+                <property name="password" value="861221293"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--package包 加载包下所有文件 加载多个mapper-->
+        <package name="com.xgf.mysql_cache.dao"/>
+
+    </mappers>
+
+</configuration>
