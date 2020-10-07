@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xgf.dao.UserDao">
+    <!--通过username和password查询user-->
+    <select id="getUserByUsernamePassword" parameterType="com.xgf.bean.User" resultType="com.xgf.bean.User">
+           select uid,username,password,name,birthday,sex,telephone,email,status,code
+            from tab_user
+            where username = #{username} and password = #{password}
+
+    </select>
+
+</mapper>
