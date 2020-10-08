@@ -34,14 +34,14 @@
             if(flag){
                 $("#username").css("border","");
             }else{
-                $("#username").css("border","1px solid red");
+                $("#username").css("border","3px solid red");
             }
             //alert(flag)
             return flag;
         }
         //检查密码是否规范
         function checkPassword(){
-            //判断密码输入框的值是否合法
+            //判断密码输入框的值是否合法,8-20个字符
             var username = $("#password").val();
             var reg =  /^\w{8,20}$/ ;
 
@@ -49,7 +49,7 @@
             if(flag){
                 $("#password").css("border","");//无色框
             }else{
-                $("#password").css("border","1px solid red");//红框
+                $("#password").css("border","3px solid red");//红框
             }
             //alert(flag)
             return flag;
@@ -94,13 +94,18 @@
                         }
                     });
                 }else{
-                    $("#errorMsg").html("用户名或密码输入不规范，用户名密码错误");
+                    $("#errorMsg").html("用户名或密码输入不规范，8到20位数字或字母组成");
                 }
             })
         })
 
     </script>
 
+    <style>
+        .rg_form > .rg_form_center{
+
+        }
+    </style>
 </head>
 
 <body>
@@ -146,7 +151,7 @@
                     </div>
                 </div>
             </form>
-            <div class="reg" >没有账户？<a href="javascript:;">立即注册</a></div>
+            <div class="reg" >没有账户？<a href="${pageContext.request.contextPath}/register.jsp">立即注册</a></div>
         </div>
     </div>
 </section>

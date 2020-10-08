@@ -12,4 +12,16 @@
 
     </select>
 
+    <!--注册时通过usernmae查询是否被注册过-->
+    <select id="findByUserName" parameterType="string" resultType="com.xgf.bean.User">
+         select uid,username,password,name,birthday,sex,telephone,email,status,code
+          from tab_user
+          where username = #{username}
+    </select>
+
+    <!--保存用户注册数据，添加用户-->
+    <insert id="saveUser" parameterType="com.xgf.bean.User" >
+        insert into tab_user values
+        (null,#{username},#{password},#{name},#{birthday},#{sex},#{telephone},#{email},#{status},#{code})
+    </insert>
 </mapper>

@@ -1,9 +1,9 @@
 package com.xgf.bean;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class User {
-    private int uid;
+    private Integer uid;
     private String username;    //登录用户名
     private String password;    //密码
     private Date birthday;      //生日
@@ -17,7 +17,7 @@ public class User {
     public User() {
     }
 
-    public User(int uid, String username, String password, Date birthday, String name, String sex, String telephone, String email, String status, String code) {
+    public User(Integer uid, String username, String password, Date birthday, String name, String sex, String telephone, String email, String status, String code) {
         this.uid = uid;
         this.username = username;
         this.password = password;
@@ -34,7 +34,7 @@ public class User {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(Integer uid) {
         this.uid = uid;
     }
 

@@ -50,6 +50,6 @@ public class CheckCodeServlet extends HttpServlet {
         ImageIO.write(image,"jpeg",outputStream);//参1，内存中的图片  参2，格式  参3，字节输出流
         outputStream.flush();
         outputStream.close();//关流
-//        request.getRequestDispatcher("/").forward(request,response);
+//        request.getRequestDispatcher("/").forregist.htmld(request,response);
     }
 }

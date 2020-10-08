@@ -4,6 +4,9 @@ import com.xgf.bean.User;
 import com.xgf.service.UserService;
 import org.junit.Test;
 
+import java.util.Date;
+
+
 //测试user业务层
 public class TestUserService {
 
@@ -44,4 +47,24 @@ public class TestUserService {
             System.out.println("用户未激活");
         }
     }
+
+
+    //测试注册用户 - 保存用户信息  需要对username是否已经被注册过进行判断
+    @Test
+    public void test02() {
+
+        UserService userService = new UserService();
+
+        User user= new User(null,"register123","ABC123456",new Date(),"注册昵称","男","17878782828","9689621@qq.com","N","codeNumber");
+//        user.setUsername("strive_gf");
+//        user.setPassword("ABC123456");
+        int code = userService.register(user);
+
+        if(code == 1){
+            System.out.println("注册成功");
+        }else if(code == 0){
+            System.out.println(user.getUsername()+"已经被注册过了，请更换用户名");
+        }
+    }
+
 }

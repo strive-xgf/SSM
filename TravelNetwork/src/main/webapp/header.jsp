@@ -9,23 +9,23 @@
             <img src="images/top_banner.jpg" alt="头部导航栏">
         </div>
         <div class="shortcut">
-            <!-- 未登录状态  -->
-            <div class="login_out">
-                <a href="login.html">登录</a>
-                <a href="register.html">注册</a>
-            </div>
             <!-- 登录状态  -->
-            <div class="login">
-<%--            将session中的用户数据取出来 --%>
-<%--            判断用户对象是否为空  如果是提示请登录，否则显示用户信息--%>
-            <c:if test="${user != null}">
-                <span>欢迎使用，${user.name}</span>
-            </c:if>
-            <c:if test="${user == null}">
-                <span>您未登录，请登录</span>
-            </c:if>
-                <a href="myfavorite.jsp" class="collection">我的收藏</a>
-                <a href="${pageContext.request.contextPath}/loginOutServlet">退出</a>
+            <div class="login" style="margin-left: -100px">
+    <%--            将session中的用户数据取出来 --%>
+    <%--            判断用户对象是否为空  如果是提示请登录，否则显示用户信息--%>
+             <!-- 登录显示  -->
+                <c:if test="${user != null}">
+                    <span>欢迎使用，${user.username}</span>
+                    <a href="myfavorite.jsp" class="collection">我的收藏</a>
+                    <a href="${pageContext.request.contextPath}/loginOutServlet">退出</a>
+                </c:if>
+            <!-- 未登录显示  -->
+                <c:if test="${user == null}">
+                    <span>您还没有登录</span>
+                    <a href="login.jsp">登录</a>
+                    <a href="register.jsp">注册</a>
+                </c:if>
+
             </div>
         </div>
         <div class="header_wrap">

@@ -18,8 +18,13 @@
     <![endif]-->
 </head>
 <body>
-	<!--引入头部-->
-    <div id="header"></div>
+	<!--引入头部  include指令，包含指令
+	    </%@ include file="header.jsp"%>
+	    <jsp/:include page="header.jsp"/>
+	-->
+    <div id="header">
+        <%@ include file="header.jsp"%>
+    </div>
     <!-- banner start-->
     <section id="banner">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="2000">
@@ -354,7 +359,9 @@
     </section>
     <!-- 旅游 end-->
    <!--导入底部-->
-    <div id="footer"></div>
+    <div id="footer">
+        <%@ include file="footer.jsp"%>
+    </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery-3.3.1.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
