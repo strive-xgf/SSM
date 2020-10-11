@@ -24,4 +24,10 @@
         insert into tab_user values
         (null,#{username},#{password},#{name},#{birthday},#{sex},#{telephone},#{email},#{status},#{code})
     </insert>
+
+    <!-- 激活用户，更改激活状态status -->
+    <update id="updateStatus" parameterType="String">
+        update tab_user set status = 'Y' where code = #{code};
+    </update>
+
 </mapper>

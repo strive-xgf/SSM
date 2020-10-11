@@ -4,6 +4,8 @@ package com.xgf.service;
 import com.xgf.bean.User;
 import com.xgf.dao.UserDao;
 import com.xgf.util.GetDaoUtils;
+import com.xgf.util.MailUtils;
+import com.xgf.util.UuidUtil;
 
 //user业务层
 public class UserService {
@@ -33,16 +35,27 @@ public class UserService {
         User u = userDao.findByUserName(user.getUsername());
         if(u == null){
             user.setStatus("N");//注册成功，但是设置为未激活
-
             //通过UUID获取一个激活码
-            //user.setCode(activeCode);//激活
+            user.setCode(UuidUtil.getUuid());//生成激活码
+
+            //参1：收件的邮箱  参2：邮箱内容，支持html语句  参3：邮件标题
+            MailUtils.sendMail(user.getEmail(),"<a href='http://localhost:8080/TravelNetwork/activeServlet?activeCode="+user.getCode()+"'>点击激活账户</a>","点击激活账户");
+
             //保存用户注册数据
             userDao.saveUser(user);
             return 1;//未存在，可以注册
         }else {
             return 0;//已存在，不可注册
         }
+    }
 
+    //激活 账号激活
+    public int active(String activeCode) {
+        //判断激活码是否正确
 
+        //激活，更新激活码
+        int code =  userDao.updateStatus(activeCode); //1 表示成功
+
+        return code;
     }
 }

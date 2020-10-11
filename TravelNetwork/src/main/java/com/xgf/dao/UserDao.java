@@ -11,4 +11,7 @@ public interface UserDao {
 
     //保存用户注册数据，添加用户
     void saveUser(User user);
+
+    //用户激活
+    int updateStatus(String code);
 }
