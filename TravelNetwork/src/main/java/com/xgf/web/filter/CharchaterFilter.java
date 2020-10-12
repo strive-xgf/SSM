@@ -16,7 +16,7 @@ public class CharchaterFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        System.out.println("CharchaterFilter");
+//        System.out.println("CharchaterFilter");
         //设置请求编码
         req.setCharacterEncoding("UTF-8");
         //设置响应编码

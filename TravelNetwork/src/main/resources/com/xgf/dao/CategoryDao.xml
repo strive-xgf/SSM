@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xgf.dao.CategoryDao">
+
+    <!-- 查找所有分类，按升序输出 -->
+    <select id="findAll" resultType="com.xgf.bean.Category">
+        select cid,cname from tab_category order by cid asc;
+    </select>
+
+
+    <!-- 通过id查找category -->
+    <select id="findOneByCid" parameterType="int" resultType="com.xgf.bean.Category">
+        select cid,cname from  tab_category c where c.cid =#{cid}
+    </select>
+</mapper>
